@@ -19,8 +19,6 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	@Override
 	public List<EmployeePayrollData> getEmployeePayrollData() {
 		// TODO Auto-generated method stub
-		List<EmployeePayrollData> employeePayrollList=new ArrayList<>();
-		employeePayrollList.add(new EmployeePayrollData(1,new EmployeePayrollDTO("Pankaj",3000)));
 		
 		return employeePayrollList;
 	}
@@ -29,30 +27,32 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	public EmployeePayrollData getEmployeePayrollDataNyId(int empId) {
 		// TODO Auto-generated method stub
 		//EmployeePayrollData employeePayrollData=null;
-		EmployeePayrollData employeePayrollData=null;
-		employeePayrollData=new EmployeePayrollData(1,new EmployeePayrollDTO("Pankaj",3000));
-		return employeePayrollData;
+		return employeePayrollList.get(empId-1);
 	}
 
 	@Override
 	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
 		// TODO Auto-generated method stub
 		EmployeePayrollData employeePayrollData=null;
-		employeePayrollData=new EmployeePayrollData(3,empPayrollDTO);
+		employeePayrollData=new EmployeePayrollData(1,empPayrollDTO);
+		employeePayrollList.add(employeePayrollData);
 		return employeePayrollData;
 	}
 
 	@Override
 	public EmployeePayrollData updatedEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
 		// TODO Auto-generated method stub
-		EmployeePayrollData employeePayrollData=null;
-		employeePayrollData=new EmployeePayrollData(empId,empPayrollDTO);
-		return employeePayrollData;
+		EmployeePayrollData empData=this.getEmployeePayrollDataNyId(empId);
+		empData.setName(empPayrollDTO.name);
+		empData.setSalary(empPayrollDTO.salary);
+		employeePayrollList.set(empId-1, empData);
+		return empData;
 	}
 
 	@Override
 	public void deleteEmployeePayrollData(int empId) {
 		// TODO Auto-generated method stub
+		employeePayrollList.remove(empId-1);
 
 	}
 
