@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.EmployeePayrollApp.dto.EmployeePayrollDTO;
+import com.example.EmployeePayrollApp.exceptions.EmployeePayrollException;
 import com.example.EmployeePayrollApp.model.EmployeePayrollData;
 
 
@@ -27,14 +28,17 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	public EmployeePayrollData getEmployeePayrollDataNyId(int empId) {
 		// TODO Auto-generated method stub
 		//EmployeePayrollData employeePayrollData=null;
-		return employeePayrollList.get(empId-1);
+		return employeePayrollList.stream().filter(empData->empData.getEmployeeId()==empId)
+				.findFirst()
+				.orElseThrow(()->new EmployeePayrollException("Employee not found"));
+		//return employeePayrollList.get(empId-1);
 	}
 
 	@Override
 	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
 		// TODO Auto-generated method stub
 		EmployeePayrollData employeePayrollData=null;
-		employeePayrollData=new EmployeePayrollData(1,empPayrollDTO);
+		employeePayrollData=new EmployeePayrollData(employeePayrollList.size()+1,empPayrollDTO);
 		employeePayrollList.add(employeePayrollData);
 		return employeePayrollData;
 	}
