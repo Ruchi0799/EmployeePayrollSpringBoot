@@ -9,11 +9,19 @@ import org.springframework.stereotype.Service;
 import com.example.EmployeePayrollApp.dto.EmployeePayrollDTO;
 import com.example.EmployeePayrollApp.exceptions.EmployeePayrollException;
 import com.example.EmployeePayrollApp.model.EmployeePayrollData;
+import com.example.EmployeePayrollApp.repository.EmployeePayrollRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 
 @Service
+@Slf4j
 public class EmployeePayrollService implements IEmployeePayrollService {
+	
+	
+	@Autowired
+	private EmployeePayrollRepository employeeRepository;
 	
 	private List<EmployeePayrollData> employeePayrollList=new ArrayList<>();
 
@@ -33,14 +41,17 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 				.orElseThrow(()->new EmployeePayrollException("Employee not found"));
 		//return employeePayrollList.get(empId-1);
 	}
+	
+	
 
 	@Override
 	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
 		// TODO Auto-generated method stub
 		EmployeePayrollData employeePayrollData=null;
-		employeePayrollData=new EmployeePayrollData(employeePayrollList.size()+1,empPayrollDTO);
+		employeePayrollData=new EmployeePayrollData(empPayrollDTO);
 		employeePayrollList.add(employeePayrollData);
-		return employeePayrollData;
+		log.debug("Emp Data:"+employeePayrollData.toString());
+		return employeeRepository.save(employeePayrollData);
 	}
 
 	@Override
