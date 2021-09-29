@@ -41,6 +41,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	}
 	
 	
+	
 
 	@Override
 	public EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO) {
@@ -66,6 +67,12 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		EmployeePayrollData empData=this.getEmployeePayrollDataNyId(empId);
 		employeeRepository.delete(empData);
 
+	}
+
+	@Override
+	public List<EmployeePayrollData> getEmployeeByDepartment(String department) {
+		// TODO Auto-generated method stub
+		return employeeRepository.findEmployeeByDepartment(department);
 	}
 
 }
