@@ -29,16 +29,14 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	public List<EmployeePayrollData> getEmployeePayrollData() {
 		// TODO Auto-generated method stub
 		
-		return employeePayrollList;
+		return employeeRepository.findAll();
 	}
 
 	@Override
 	public EmployeePayrollData getEmployeePayrollDataNyId(int empId) {
 		// TODO Auto-generated method stub
 		//EmployeePayrollData employeePayrollData=null;
-		return employeePayrollList.stream().filter(empData->empData.getEmployeeId()==empId)
-				.findFirst()
-				.orElseThrow(()->new EmployeePayrollException("Employee not found"));
+		return employeeRepository.findById(empId).orElseThrow(()->new EmployeePayrollException("Employee not found"+empId));
 		//return employeePayrollList.get(empId-1);
 	}
 	
@@ -58,16 +56,15 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	public EmployeePayrollData updatedEmployeePayrollData(int empId, EmployeePayrollDTO empPayrollDTO) {
 		// TODO Auto-generated method stub
 		EmployeePayrollData empData=this.getEmployeePayrollDataNyId(empId);
-		empData.setName(empPayrollDTO.name);
-		empData.setSalary(empPayrollDTO.salary);
-		employeePayrollList.set(empId-1, empData);
-		return empData;
+		empData.updateEmployeePayrollData(empPayrollDTO);
+		return employeeRepository.save(empData);
 	}
 
 	@Override
 	public void deleteEmployeePayrollData(int empId) {
 		// TODO Auto-generated method stub
-		employeePayrollList.remove(empId-1);
+		EmployeePayrollData empData=this.getEmployeePayrollDataNyId(empId);
+		employeeRepository.delete(empData);
 
 	}
 

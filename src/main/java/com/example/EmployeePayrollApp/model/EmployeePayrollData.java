@@ -15,7 +15,8 @@ import javax.persistence.Table;
 import com.example.EmployeePayrollApp.dto.EmployeePayrollDTO;
 
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
+@NoArgsConstructor
 @Entity
 @Table(name="employee_payroll")
 public @Data class EmployeePayrollData {
