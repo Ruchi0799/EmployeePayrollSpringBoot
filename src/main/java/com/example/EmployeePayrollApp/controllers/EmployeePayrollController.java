@@ -32,7 +32,7 @@ public class EmployeePayrollController {
 	@Autowired
 	private IEmployeePayrollService employeePayrollService;
 	
-	@RequestMapping({"","/","/get"})
+	@GetMapping({"","/","/get"})
 	public ResponseEntity<ResponseDTO>  getEmployeePayrollData(){
 		List<EmployeePayrollData> employeePayrollData=null;
 		employeePayrollData=employeePayrollService.getEmployeePayrollData();
